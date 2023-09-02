@@ -1,0 +1,46 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #232b36;
+  overflow: hidden auto;
+  margin: 0;
+}
+
+.stories-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+}
+
+.stories-container .ava:not(:last-child) {
+  margin-right: 10px;
+}
+
+.ava {
+  display: block;
+  width: 100px;
+  position: relative;
+}
+
+.ava__stories,
+.ava__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ava__stories {
+  display: block;
+  width: 100%;
+}
+
+.ava__img {
+  display: block;
+  width: calc(100% - 16px);
+  border-radius: 50%;
+}
