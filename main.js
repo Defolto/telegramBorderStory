@@ -1,24 +1,44 @@
-function LenStories(num, el) {
-  // Получаем в аватарке SVG circle
-  const cir = el.querySelector("svg.ava__stories circle");
+function LenStories(selector, options) {
+  let {count, strokeWidth, gap} = options
+  const el = document.querySelector(selector);
 
-  // Если circle существует там и кол-во "историй" больше 1
-  if (cir && num > 1) {
-    //
-    // Длина отступа
-    const gap = 10;
-
-    // Вычисляем длины пункта
-    const totalLength = 2 * Math.PI * +cir.getAttribute("r");
-    // Вычисляем отступ между пунктами
-    const dashLength = totalLength / num - (gap * num) / num;
-
-    // Выставляем значения
-    cir.setAttribute("stroke-dasharray", dashLength + " " + gap);
-    cir.setAttribute("stroke-dashoffset", dashLength / 2);
+  if (strokeWidth > 10) {
+    strokeWidth = 10
+    console.error("strokeWidth не может быть больше 10. Задано значение 10.")
   }
+  // чтобы отступы всегда были
+  gap += strokeWidth
+
+  const widthAva = +el.getBoundingClientRect().width;
+  const radius = widthAva/2 - strokeWidth
+  // Вычисляем длины пункта
+  const totalLength = 2 * Math.PI * radius;
+  // Вычисляем отступ между пунктами
+  const dashLength = totalLength / count - (gap * count) / count;
+
+  const svgBorder = `
+  <svg 
+    class="ava__stories" 
+    viewbox="0 0 ${widthAva} ${widthAva}">
+      <circle 
+        cx="${widthAva/2}" 
+        cy="${widthAva/2}" 
+        r="${radius}" 
+        fill="none" 
+        stroke="url(#ava-stories-fill)" 
+        stroke-width="${strokeWidth}" 
+        stroke-linecap="round"
+        stroke-dasharray="${dashLength + " " + gap}"
+        stroke-dashoffset="${dashLength / 2}" />
+  </svg>`
+
+  el.insertAdjacentHTML("beforeend", svgBorder);
+  document.querySelector(`${selector} > img`).setAttribute("style", `width: ${widthAva - strokeWidth*2 - 15}px`)
 }
 
-// Это для демо
-const ava = document.querySelectorAll(".ava");
-[1, 2, 3, 6, 10].map((val, i) => LenStories(val, ava[i]));
+const options = {
+  count: 10,
+  strokeWidth: 15,
+  gap: 5
+}
+LenStories(".ava", options)

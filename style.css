@@ -22,7 +22,7 @@ body {
 
 .ava {
   display: block;
-  width: 100px;
+  width: 200px;
   position: relative;
 }
 
@@ -41,6 +41,6 @@ body {
 
 .ava__img {
   display: block;
-  width: calc(100% - 16px);
   border-radius: 50%;
+  width: 100%;
 }
